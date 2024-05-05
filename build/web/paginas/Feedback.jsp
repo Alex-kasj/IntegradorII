@@ -33,7 +33,7 @@
 
     </head>
     <body class="cuadro">
-        <nav class="navbar navbar-expand-lg bg-white navbar">
+                <nav class="navbar navbar-expand-lg bg-white navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href=""><img style="width: 170px;" id="logo" src="../img/LOGO.png" alt="alt"/></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Popular.jsp">Populares</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Recompensas.jsp">Recompensas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../CerrarSesion">CERRAR SESION</a>

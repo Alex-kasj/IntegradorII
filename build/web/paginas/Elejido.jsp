@@ -52,6 +52,9 @@
                             <a class="nav-link" href="Popular.jsp">Populares</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="Recompensas.jsp">Recompensas</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../CerrarSesion">CERRAR SESION</a>
                         </li>
                     </ul>
@@ -64,9 +67,11 @@
                 int id = Integer.parseInt(request.getParameter("id"));
                 Usuario user = (Usuario) session.getAttribute("usuario");
                 DAOReco daorec = new DAOReco();
+                AccesoDatos daoUser = new AccesoDatos();
                 boolean tipoAct = daorec.obtenerTipoAct(id);
                 String correo = user.getNombre();
                 int IdUser = daorec.retornaIdUser(correo);
+                daoUser.updatePuntos(correo);
                 daorec.registrarFeedBack(id, IdUser);
                 List<Recomendacion> recomendaciones = daorec.obtenerRecoEspe(id);
                 // Iteramos sobre la lista de categoria y generamos un <div> para cada una

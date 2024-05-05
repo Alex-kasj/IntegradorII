@@ -29,7 +29,7 @@
 
             }
         </style>
-        <title>Categoria</title>
+        <title>Recompensas</title>
 
     </head>
     <body class="cuadro">
@@ -61,36 +61,48 @@
             </div>
         </nav>
         <div class="container">
-            <h1> TOP 10 </h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Click</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int id = Integer.parseInt(request.getParameter("idsub"));
-                        DAOReco daorec = new DAOReco();
+            <%
+                Usuario user = (Usuario) session.getAttribute("usuario");
+                String correo = user.getNombre();
+                AccesoDatos access = new AccesoDatos();
+                double puntos = access.obtenerPuntos(correo);
+            %>
+            <h1> PUNTOS ACUMULADOS: <%= puntos%> </h1>
+            <script>
+                function Validar() {
+                    tableCanje.submit();
+                }
+            </script>
+            <form name="tableCanje" action="../Canjear" method="POST">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Canjear</th>
+                            <th scope="col">Puntos</th>
+                            <th scope="col">Click</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            DAORecompensa daorecom = new DAORecompensa();
+                            List<Recompensa> recompensas = daorecom.obtenerRecompensas();
+                            for (Recompensa recompensa : recompensas) {
+                        %>
+                        <tr>
+                            <th scope="row"><%= recompensa.getIdRecompensa()%></th>
+                            <td><%= recompensa.getNombre()%></td>
+                            <td><%= recompensa.getPuntos()%></td>
+                            <input type="hidden" name="idRecompensa" value="<%= recompensa.getIdRecompensa()%>">
+                            <td><a onclick="Validar()" class="btn btn-primary">Canjear</a></td>
+                        </tr>
+                        <%
+                            }
 
-                        List<Recomendacion> recomendaciones = daorec.obtenerRecomendacion(id);
-                        // Iteramos sobre la lista de categoria y generamos un <div> para cada una
-                        for (Recomendacion recomendacion : recomendaciones) {
-                    %>
-                    <tr>
-                        <th scope="row"><%= recomendacion.getIdSub()%></th>
-                        <td><%= recomendacion.getNombre()%></td>
-                        <td><%= recomendacion.getDireccion()%></td>
-                        <td><a href="Elejido.jsp?id=<%= recomendacion.getIdReco()%>" class="btn btn-primary">Click</a></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                </tbody>
-            </table>
+                        %>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </body>
 </html>

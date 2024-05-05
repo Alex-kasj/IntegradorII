@@ -51,6 +51,9 @@
                             <a class="nav-link" href="Popular.jsp">Populares</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="Recompensas.jsp">Recompensas</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../CerrarSesion">CERRAR SESION</a>
                         </li>
                     </ul>
@@ -72,7 +75,7 @@
                     <%
                         int id = Integer.parseInt(request.getParameter("idsub"));
                         DAOReco daorec = new DAOReco();
-                        
+
                         List<Recomendacion> recomendaciones = daorec.obtenerRecomendacion(id);
                         // Iteramos sobre la lista de categoria y generamos un <div> para cada una
                         for (Recomendacion recomendacion : recomendaciones) {

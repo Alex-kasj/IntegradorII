@@ -11,6 +11,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfOEw9keFk2aOoQ8V2rakpNWlIc2YNoTw&callback=initMap"></script>
         <style>
             .container {
                 position: absolute;
@@ -32,7 +33,7 @@
         <title>Categoria</title>
 
     </head>
-    <body class="cuadro">
+    <body class="cuadro" onload="initMap()">
         <nav class="navbar navbar-expand-lg bg-white navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href=""><img style="width: 170px;" id="logo" src="../img/LOGO.png" alt="alt"/></a>
@@ -61,36 +62,30 @@
             </div>
         </nav>
         <div class="container">
-            <h1> TOP 10 </h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Click</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        int id = Integer.parseInt(request.getParameter("idsub"));
-                        DAOReco daorec = new DAOReco();
+            <div class="container">
+            <%  
+                int id = Integer.parseInt(request.getParameter("idRecompensa"));
+                System.out.println(id);
+                DAORecompensa daoRecom = new DAORecompensa();
+                List<Recompensa> recompensas = daoRecom.cuponRecompensa(id);
 
-                        List<Recomendacion> recomendaciones = daorec.obtenerRecomendacion(id);
-                        // Iteramos sobre la lista de categoria y generamos un <div> para cada una
-                        for (Recomendacion recomendacion : recomendaciones) {
-                    %>
-                    <tr>
-                        <th scope="row"><%= recomendacion.getIdSub()%></th>
-                        <td><%= recomendacion.getNombre()%></td>
-                        <td><%= recomendacion.getDireccion()%></td>
-                        <td><a href="Elejido.jsp?id=<%= recomendacion.getIdReco()%>" class="btn btn-primary">Click</a></td>
-                    </tr>
-                    <%
-                        }
-                    %>
-                </tbody>
-            </table>
+                // Iteramos sobre la lista de categoria y generamos un <div> para cada una
+                for (Recompensa recompensa : recompensas) {
+                
+            %>
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><%= recompensa.getNombre()%></h5>
+                    <h6 class="card-text">CODIGO DE CUPON:</h6>
+                    <p class="card-text"> <%= recompensa.getCodigo()%> </p>
+                    
+                </div>
+            </div>
+            <%
+                }
+            %>
+        </div>
         </div>
     </body>
 </html>

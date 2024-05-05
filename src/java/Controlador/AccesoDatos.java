@@ -12,6 +12,7 @@ import Modelo.Usuario;
 public class AccesoDatos {
 
     Conexion conexion = Conexion.getInstance();
+    Connection cnn = conexion.getConnection();
 
     //Login
     public int Buscar(String n, String c) throws SQLException {
@@ -34,16 +35,17 @@ public class AccesoDatos {
     }
 
     //Register
-    public void registrarUsuario(int cod,String nom, String ape, String pass, String dni, String email) throws SQLException {
-        String sql = "Insert into Usuario Values(?,?,?,?,?,?)";
+    public void registrarUsuario(int cod, String nom, String ape, String pass, String dni, String email) throws SQLException {
+        String sql = "Insert into Usuario Values(?,?,?,?,?,?,?)";
         Statement set = conexion.getConnection().createStatement();
         PreparedStatement pasar = conexion.getConnection().prepareStatement(sql);
         pasar.setInt(1, cod);
         pasar.setString(2, nom);
         pasar.setString(3, ape);
-        pasar.setString(4, pass);
-        pasar.setString(5, dni);
-        pasar.setString(6, email);
+        pasar.setString(4, dni);
+        pasar.setString(5, email);
+        pasar.setString(6, pass);
+        pasar.setDouble(7, 0.0);
         pasar.executeUpdate();
         conexion.close();
 
@@ -69,29 +71,8 @@ public class AccesoDatos {
 
         return cod;
     }
-    /*
-    //obtener el estado del usuario
-    public int obtenerEstado(String n, String c) {
-        int cod=0;
-        //Obtiene el último codigo de usuario y suma +1
-        String sql = "SELECT rol_id from usuarios WHERE emailusu='"+ n +"' AND passusu='" + c + "';";
-        
-        try {
-            Statement stmt = conexion.getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            //Guarda el codigo nuevo en un String
-            while (rs.next()) {
-                cod = rs.getInt(1);
 
-            }
-            stmt.close();
-        } catch (Exception ex) {
-
-        }
-        return cod;
-    }
-    */
-    //Olvidaste Contraseña
+    //actualizar correo y contra
     public void updateUsuario(String correo, String clave) throws SQLException {
         //Actualiza passusu de la tabla usuarios
         String sql = "UPDATE Usuario SET contra=? WHERE correo=?";
@@ -104,6 +85,54 @@ public class AccesoDatos {
         } catch (SQLException ex) {
         }
         conexion.close();
+    }
+
+    //añadir puntos
+    public void updatePuntos(String correo) throws SQLException {
+        //Actualiza passusu de la tabla usuarios
+        String sql = "UPDATE Usuario SET Puntos=Puntos+0.5 WHERE correo=?";
+        try {
+            PreparedStatement ps = conexion.getConnection().prepareStatement(sql);
+            ps.setString(1, correo);
+            //Ejecuta la consulta
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        conexion.close();
+    }
+    
+    //añadir puntos
+    public void quitarPuntos(double puntosQ,String correo) throws SQLException {
+        //Actualiza passusu de la tabla usuarios
+        String sql = "UPDATE Usuario SET Puntos=Puntos-? WHERE correo=?";
+        try {
+            PreparedStatement ps = conexion.getConnection().prepareStatement(sql);
+            ps.setDouble(1, puntosQ);
+            ps.setString(2, correo);
+            //Ejecuta la consulta
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        conexion.close();
+    }
+
+    public double obtenerPuntos(String correo) throws SQLException {
+        double cod = 0;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT Puntos FROM Usuario WHERE correo=?";
+        stmt = cnn.prepareStatement(sql);
+        stmt.setString(1, correo);
+        rs = stmt.executeQuery();
+
+        if (rs.next() == true) {
+            cod = rs.getDouble(1);
+        } else {
+            cod = 0;
+        }
+        stmt.close();
+        return cod;
+
     }
     /*
     //Busca usuario por carreo

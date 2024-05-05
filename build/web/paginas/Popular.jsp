@@ -51,6 +51,9 @@
                             <a class="nav-link" href="Popular.jsp">Populares</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="Recompensas.jsp">Recompensas</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../CerrarSesion">CERRAR SESION</a>
                         </li>
                     </ul>

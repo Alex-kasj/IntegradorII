@@ -20,13 +20,13 @@
                 max-width: max-content;
                 height: max-content;
                 text-align: center;
-                
+
             }
             .card{
                 height: max-content;
                 max-width: max-content;
                 margin: 10%;
-                
+
             }
         </style>
         <title>Categoria</title>
@@ -51,6 +51,9 @@
                             <a class="nav-link" href="Popular.jsp">Populares</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="Recompensas.jsp">Recompensas</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../CerrarSesion">CERRAR SESION</a>
                         </li>
                     </ul>
@@ -63,8 +66,8 @@
                 DAOCategoria daoCat = new DAOCategoria();
                 List<Categoria> categorias = daoCat.obtenerCategoria(id);
 
-                    // Iteramos sobre la lista de categoria y generamos un <div> para cada una
-                    for (Categoria categoria : categorias) {
+                // Iteramos sobre la lista de categoria y generamos un <div> para cada una
+                for (Categoria categoria : categorias) {
             %>
             <div class="card" style="width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
